@@ -1,0 +1,24 @@
+<html>
+<head></head>
+<body>
+    <form>
+        <div>
+            <label>Enter your todo</label>
+            <input type="text" autofocus />
+        </div>
+        <button type="submit">Add</button>
+    </form>
+    <script>
+        // Recupero il metodo per la gestione delle ipc
+        const { ipcRenderer } = require('electron');
+        // Aggiungo un listeners alla submit del form di creazione di una nuova TODO
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Recupero il valore dell'input text della nuova TODO
+            const value = document.querySelector('input').value;
+            // invio il valore tramite ipc al processo principale per l'elaborazione
+            ipcRenderer.send('todo:add', value);
+        });
+    </script>
+</body>
+</html>
